@@ -1,0 +1,37 @@
+---
+title: "Dashboard for Company & Talent Ver.1"
+---
+
+# Test Table
+## Dashboard for Company & Talent
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(reactable)
+library(googlesheets4)
+library(googleAuthR)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+df_bi_muamalat <- read_sheet("https://docs.google.com/spreadsheets/d/1w6A1mzza4fdp1FDpi0x7wWZaP0ycVR-y7TWBQ7GZuCE", range = "Bank Muamalat - Business Intelligence Analyst")
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+df_bi_muamalat_clean <- df_bi_muamalat[ , c("Name", "Email", "Phone Number", "Batch VIX", "State", "Score Task 1", "Score Task 2", "Score Task 3", "Score Task 4", "Total Score", "Advance Task Submission File 1")]
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+sticky_style <- list(backgroundColor = "#f7f7f7")
+
+
+reactable(df_bi_muamalat_clean, wrap = FALSE,
+  resizable = TRUE,
+  bordered = TRUE, 
+          columns = list(`Advance Task Submission File 1` = colDef(html = TRUE, cell = function(value, index) {
+      sprintf('<a href="%s" target="_blank">%s</a>', df_bi_muamalat_clean$`Advance Task Submission File 1`[index], value)
+    })
+  ))
+```
+
+
